@@ -43,10 +43,10 @@ export declare const catalogComponentSchema: z.ZodObject<{
             string: "string";
             number: "number";
             boolean: "boolean";
+            phone: "phone";
             email: "email";
             url: "url";
             text: "text";
-            phone: "phone";
             markdown: "markdown";
             richText: "richText";
             asset: "asset";
@@ -91,10 +91,10 @@ export declare const componentCatalogSchema: z.ZodObject<{
                 string: "string";
                 number: "number";
                 boolean: "boolean";
+                phone: "phone";
                 email: "email";
                 url: "url";
                 text: "text";
-                phone: "phone";
                 markdown: "markdown";
                 richText: "richText";
                 asset: "asset";

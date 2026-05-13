@@ -58,7 +58,52 @@ export declare const themeIngestionOutputSchema: z.ZodObject<{
             description: z.ZodString;
             canonicalPath: z.ZodOptional<z.ZodString>;
             noindex: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+            robots: z.ZodOptional<z.ZodEnum<{
+                "index,follow": "index,follow";
+                "noindex,follow": "noindex,follow";
+                "index,nofollow": "index,nofollow";
+                "noindex,nofollow": "noindex,nofollow";
+            }>>;
             socialImage: z.ZodOptional<z.ZodString>;
+            ogTitle: z.ZodOptional<z.ZodString>;
+            ogDescription: z.ZodOptional<z.ZodString>;
+            ogImage: z.ZodOptional<z.ZodString>;
+            twitterTitle: z.ZodOptional<z.ZodString>;
+            twitterDescription: z.ZodOptional<z.ZodString>;
+            twitterImage: z.ZodOptional<z.ZodString>;
+            schemaType: z.ZodOptional<z.ZodEnum<{
+                WebPage: "WebPage";
+                AboutPage: "AboutPage";
+                ContactPage: "ContactPage";
+                Service: "Service";
+                FAQPage: "FAQPage";
+                Article: "Article";
+                BlogPosting: "BlogPosting";
+                LocalBusiness: "LocalBusiness";
+                Organization: "Organization";
+                Product: "Product";
+            }>>;
+            faq: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                question: z.ZodString;
+                answer: z.ZodString;
+            }, z.core.$strict>>>;
+            service: z.ZodOptional<z.ZodObject<{
+                name: z.ZodOptional<z.ZodString>;
+                description: z.ZodOptional<z.ZodString>;
+                serviceType: z.ZodOptional<z.ZodString>;
+                areaServed: z.ZodOptional<z.ZodString>;
+                providerName: z.ZodOptional<z.ZodString>;
+            }, z.core.$strict>>;
+            localBusiness: z.ZodOptional<z.ZodObject<{
+                name: z.ZodOptional<z.ZodString>;
+                phone: z.ZodOptional<z.ZodString>;
+                email: z.ZodOptional<z.ZodString>;
+                address: z.ZodOptional<z.ZodString>;
+                openingHours: z.ZodOptional<z.ZodString>;
+                sameAs: z.ZodOptional<z.ZodString>;
+            }, z.core.$strict>>;
+            schemaJson: z.ZodOptional<z.ZodString>;
+            headCode: z.ZodOptional<z.ZodString>;
         }, z.core.$strict>;
         sections: z.ZodArray<z.ZodObject<{
             id: z.ZodOptional<z.ZodString>;

@@ -19,10 +19,10 @@ export declare const schemas: {
                     string: "string";
                     number: "number";
                     boolean: "boolean";
+                    phone: "phone";
                     email: "email";
                     url: "url";
                     text: "text";
-                    phone: "phone";
                     markdown: "markdown";
                     richText: "richText";
                     asset: "asset";
@@ -72,7 +72,52 @@ export declare const schemas: {
             description: z.ZodString;
             canonicalPath: z.ZodOptional<z.ZodString>;
             noindex: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+            robots: z.ZodOptional<z.ZodEnum<{
+                "index,follow": "index,follow";
+                "noindex,follow": "noindex,follow";
+                "index,nofollow": "index,nofollow";
+                "noindex,nofollow": "noindex,nofollow";
+            }>>;
             socialImage: z.ZodOptional<z.ZodString>;
+            ogTitle: z.ZodOptional<z.ZodString>;
+            ogDescription: z.ZodOptional<z.ZodString>;
+            ogImage: z.ZodOptional<z.ZodString>;
+            twitterTitle: z.ZodOptional<z.ZodString>;
+            twitterDescription: z.ZodOptional<z.ZodString>;
+            twitterImage: z.ZodOptional<z.ZodString>;
+            schemaType: z.ZodOptional<z.ZodEnum<{
+                WebPage: "WebPage";
+                AboutPage: "AboutPage";
+                ContactPage: "ContactPage";
+                Service: "Service";
+                FAQPage: "FAQPage";
+                Article: "Article";
+                BlogPosting: "BlogPosting";
+                LocalBusiness: "LocalBusiness";
+                Organization: "Organization";
+                Product: "Product";
+            }>>;
+            faq: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                question: z.ZodString;
+                answer: z.ZodString;
+            }, z.core.$strict>>>;
+            service: z.ZodOptional<z.ZodObject<{
+                name: z.ZodOptional<z.ZodString>;
+                description: z.ZodOptional<z.ZodString>;
+                serviceType: z.ZodOptional<z.ZodString>;
+                areaServed: z.ZodOptional<z.ZodString>;
+                providerName: z.ZodOptional<z.ZodString>;
+            }, z.core.$strict>>;
+            localBusiness: z.ZodOptional<z.ZodObject<{
+                name: z.ZodOptional<z.ZodString>;
+                phone: z.ZodOptional<z.ZodString>;
+                email: z.ZodOptional<z.ZodString>;
+                address: z.ZodOptional<z.ZodString>;
+                openingHours: z.ZodOptional<z.ZodString>;
+                sameAs: z.ZodOptional<z.ZodString>;
+            }, z.core.$strict>>;
+            schemaJson: z.ZodOptional<z.ZodString>;
+            headCode: z.ZodOptional<z.ZodString>;
         }, z.core.$strict>;
         sections: z.ZodArray<z.ZodObject<{
             id: z.ZodOptional<z.ZodString>;
@@ -111,10 +156,10 @@ export declare const schemas: {
                     string: "string";
                     number: "number";
                     boolean: "boolean";
+                    phone: "phone";
                     email: "email";
                     url: "url";
                     text: "text";
-                    phone: "phone";
                     markdown: "markdown";
                     richText: "richText";
                     asset: "asset";
@@ -184,7 +229,52 @@ export declare const schemas: {
                 description: z.ZodString;
                 canonicalPath: z.ZodOptional<z.ZodString>;
                 noindex: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+                robots: z.ZodOptional<z.ZodEnum<{
+                    "index,follow": "index,follow";
+                    "noindex,follow": "noindex,follow";
+                    "index,nofollow": "index,nofollow";
+                    "noindex,nofollow": "noindex,nofollow";
+                }>>;
                 socialImage: z.ZodOptional<z.ZodString>;
+                ogTitle: z.ZodOptional<z.ZodString>;
+                ogDescription: z.ZodOptional<z.ZodString>;
+                ogImage: z.ZodOptional<z.ZodString>;
+                twitterTitle: z.ZodOptional<z.ZodString>;
+                twitterDescription: z.ZodOptional<z.ZodString>;
+                twitterImage: z.ZodOptional<z.ZodString>;
+                schemaType: z.ZodOptional<z.ZodEnum<{
+                    WebPage: "WebPage";
+                    AboutPage: "AboutPage";
+                    ContactPage: "ContactPage";
+                    Service: "Service";
+                    FAQPage: "FAQPage";
+                    Article: "Article";
+                    BlogPosting: "BlogPosting";
+                    LocalBusiness: "LocalBusiness";
+                    Organization: "Organization";
+                    Product: "Product";
+                }>>;
+                faq: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                    question: z.ZodString;
+                    answer: z.ZodString;
+                }, z.core.$strict>>>;
+                service: z.ZodOptional<z.ZodObject<{
+                    name: z.ZodOptional<z.ZodString>;
+                    description: z.ZodOptional<z.ZodString>;
+                    serviceType: z.ZodOptional<z.ZodString>;
+                    areaServed: z.ZodOptional<z.ZodString>;
+                    providerName: z.ZodOptional<z.ZodString>;
+                }, z.core.$strict>>;
+                localBusiness: z.ZodOptional<z.ZodObject<{
+                    name: z.ZodOptional<z.ZodString>;
+                    phone: z.ZodOptional<z.ZodString>;
+                    email: z.ZodOptional<z.ZodString>;
+                    address: z.ZodOptional<z.ZodString>;
+                    openingHours: z.ZodOptional<z.ZodString>;
+                    sameAs: z.ZodOptional<z.ZodString>;
+                }, z.core.$strict>>;
+                schemaJson: z.ZodOptional<z.ZodString>;
+                headCode: z.ZodOptional<z.ZodString>;
             }, z.core.$strict>;
             sections: z.ZodArray<z.ZodObject<{
                 id: z.ZodOptional<z.ZodString>;
@@ -230,7 +320,7 @@ export declare function parseEditableManifest(input: unknown): {
         label: string;
         filePath: string;
         fields: Record<string, {
-            type: "string" | "number" | "boolean" | "email" | "url" | "text" | "phone" | "markdown" | "richText" | "asset";
+            type: "string" | "number" | "boolean" | "phone" | "email" | "url" | "text" | "markdown" | "richText" | "asset";
             label?: string | undefined;
             maxLength?: number | undefined;
             minLength?: number | undefined;
@@ -253,7 +343,36 @@ export declare function parsePageDocument(input: unknown): {
         description: string;
         canonicalPath?: string | undefined;
         noindex?: boolean | undefined;
+        robots?: "index,follow" | "noindex,follow" | "index,nofollow" | "noindex,nofollow" | undefined;
         socialImage?: string | undefined;
+        ogTitle?: string | undefined;
+        ogDescription?: string | undefined;
+        ogImage?: string | undefined;
+        twitterTitle?: string | undefined;
+        twitterDescription?: string | undefined;
+        twitterImage?: string | undefined;
+        schemaType?: "WebPage" | "AboutPage" | "ContactPage" | "Service" | "FAQPage" | "Article" | "BlogPosting" | "LocalBusiness" | "Organization" | "Product" | undefined;
+        faq?: {
+            question: string;
+            answer: string;
+        }[] | undefined;
+        service?: {
+            name?: string | undefined;
+            description?: string | undefined;
+            serviceType?: string | undefined;
+            areaServed?: string | undefined;
+            providerName?: string | undefined;
+        } | undefined;
+        localBusiness?: {
+            name?: string | undefined;
+            phone?: string | undefined;
+            email?: string | undefined;
+            address?: string | undefined;
+            openingHours?: string | undefined;
+            sameAs?: string | undefined;
+        } | undefined;
+        schemaJson?: string | undefined;
+        headCode?: string | undefined;
     };
     sections: {
         component: string;
@@ -275,7 +394,7 @@ export declare function parseComponentCatalog(input: unknown): {
         }>;
         description?: string | undefined;
         editableProps?: Record<string, {
-            type: "string" | "number" | "boolean" | "email" | "url" | "text" | "phone" | "markdown" | "richText" | "asset";
+            type: "string" | "number" | "boolean" | "phone" | "email" | "url" | "text" | "markdown" | "richText" | "asset";
             label?: string | undefined;
             maxLength?: number | undefined;
             minLength?: number | undefined;
@@ -318,7 +437,36 @@ export declare function parseThemeIngestionOutput(input: unknown): {
             description: string;
             canonicalPath?: string | undefined;
             noindex?: boolean | undefined;
+            robots?: "index,follow" | "noindex,follow" | "index,nofollow" | "noindex,nofollow" | undefined;
             socialImage?: string | undefined;
+            ogTitle?: string | undefined;
+            ogDescription?: string | undefined;
+            ogImage?: string | undefined;
+            twitterTitle?: string | undefined;
+            twitterDescription?: string | undefined;
+            twitterImage?: string | undefined;
+            schemaType?: "WebPage" | "AboutPage" | "ContactPage" | "Service" | "FAQPage" | "Article" | "BlogPosting" | "LocalBusiness" | "Organization" | "Product" | undefined;
+            faq?: {
+                question: string;
+                answer: string;
+            }[] | undefined;
+            service?: {
+                name?: string | undefined;
+                description?: string | undefined;
+                serviceType?: string | undefined;
+                areaServed?: string | undefined;
+                providerName?: string | undefined;
+            } | undefined;
+            localBusiness?: {
+                name?: string | undefined;
+                phone?: string | undefined;
+                email?: string | undefined;
+                address?: string | undefined;
+                openingHours?: string | undefined;
+                sameAs?: string | undefined;
+            } | undefined;
+            schemaJson?: string | undefined;
+            headCode?: string | undefined;
         };
         sections: {
             component: string;

@@ -3,10 +3,10 @@ export declare const editableFieldTypeSchema: z.ZodEnum<{
     string: "string";
     number: "number";
     boolean: "boolean";
+    phone: "phone";
     email: "email";
     url: "url";
     text: "text";
-    phone: "phone";
     markdown: "markdown";
     richText: "richText";
     asset: "asset";
@@ -16,10 +16,10 @@ export declare const editableFieldSchema: z.ZodObject<{
         string: "string";
         number: "number";
         boolean: "boolean";
+        phone: "phone";
         email: "email";
         url: "url";
         text: "text";
-        phone: "phone";
         markdown: "markdown";
         richText: "richText";
         asset: "asset";
@@ -41,10 +41,10 @@ export declare const editableTargetSchema: z.ZodObject<{
             string: "string";
             number: "number";
             boolean: "boolean";
+            phone: "phone";
             email: "email";
             url: "url";
             text: "text";
-            phone: "phone";
             markdown: "markdown";
             richText: "richText";
             asset: "asset";
@@ -77,10 +77,10 @@ export declare const editableManifestSchema: z.ZodObject<{
                 string: "string";
                 number: "number";
                 boolean: "boolean";
+                phone: "phone";
                 email: "email";
                 url: "url";
                 text: "text";
-                phone: "phone";
                 markdown: "markdown";
                 richText: "richText";
                 asset: "asset";

@@ -37,7 +37,36 @@ export const seoSchema = z
     description: z.string().min(1).max(160),
     canonicalPath: pageUrlPathSchema.optional(),
     noindex: z.boolean().default(false).optional(),
-    socialImage: z.string().min(1).max(240).optional()
+    robots: z.enum(["index,follow", "noindex,follow", "index,nofollow", "noindex,nofollow"]).optional(),
+    socialImage: z.string().max(240).optional(),
+    ogTitle: z.string().max(95).optional(),
+    ogDescription: z.string().max(220).optional(),
+    ogImage: z.string().max(240).optional(),
+    twitterTitle: z.string().max(70).optional(),
+    twitterDescription: z.string().max(200).optional(),
+    twitterImage: z.string().max(240).optional(),
+    schemaType: z.enum(["WebPage", "AboutPage", "ContactPage", "Service", "FAQPage", "Article", "BlogPosting", "LocalBusiness", "Organization", "Product"]).optional(),
+    faq: z.array(z.object({
+        question: z.string().max(160),
+        answer: z.string().max(800)
+    }).strict()).max(20).optional(),
+    service: z.object({
+        name: z.string().max(120).optional(),
+        description: z.string().max(500).optional(),
+        serviceType: z.string().max(120).optional(),
+        areaServed: z.string().max(160).optional(),
+        providerName: z.string().max(120).optional()
+    }).strict().optional(),
+    localBusiness: z.object({
+        name: z.string().max(120).optional(),
+        phone: z.string().max(40).optional(),
+        email: z.string().max(120).optional(),
+        address: z.string().max(300).optional(),
+        openingHours: z.string().max(160).optional(),
+        sameAs: z.string().max(1000).optional()
+    }).strict().optional(),
+    schemaJson: z.string().max(5000).optional(),
+    headCode: z.string().max(5000).optional()
 })
     .strict();
 export const pageSectionSchema = z
@@ -59,13 +88,6 @@ export const pageDocumentSchema = z
 })
     .strict()
     .superRefine((page, context) => {
-    if (page.seo.canonicalPath !== undefined && page.seo.canonicalPath !== page.urlPath) {
-        context.addIssue({
-            code: "custom",
-            message: "seo.canonicalPath must match urlPath",
-            path: ["seo", "canonicalPath"]
-        });
-    }
     if (page.urlPath !== "/") {
         const segments = page.urlPath.split("/").filter(Boolean);
         const lastSegment = segments.at(-1);

@@ -158,7 +158,7 @@ describe("pageDocumentSchema", () => {
     expect(result.success).toBe(false);
   });
 
-  it("requires canonical path to match the page URL path", () => {
+  it("allows canonical path overrides for SEO consolidation", () => {
     const result = pageDocumentSchema.safeParse({
       ...validPage,
       slug: "services",
@@ -167,7 +167,7 @@ describe("pageDocumentSchema", () => {
       seo: { ...validPage.seo, canonicalPath: "/different/" }
     });
 
-    expect(result.success).toBe(false);
+    expect(result.success).toBe(true);
   });
 
   it("requires slug to match the final page URL segment", () => {
