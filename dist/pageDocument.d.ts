@@ -24,6 +24,11 @@ export declare const pageStatusSchema: z.ZodEnum<{
     published: "published";
     archived: "archived";
 }>;
+export declare const sectionStatusSchema: z.ZodEnum<{
+    draft: "draft";
+    visible: "visible";
+    hidden: "hidden";
+}>;
 export declare const pageUrlPathSchema: z.ZodString;
 export declare const seoSchema: z.ZodObject<{
     title: z.ZodString;
@@ -51,6 +56,8 @@ export declare const seoSchema: z.ZodObject<{
         FAQPage: "FAQPage";
         Article: "Article";
         BlogPosting: "BlogPosting";
+        CreativeWork: "CreativeWork";
+        Person: "Person";
         LocalBusiness: "LocalBusiness";
         Organization: "Organization";
         Product: "Product";
@@ -78,8 +85,13 @@ export declare const seoSchema: z.ZodObject<{
     headCode: z.ZodOptional<z.ZodString>;
 }, z.core.$strict>;
 export declare const pageSectionSchema: z.ZodObject<{
-    id: z.ZodOptional<z.ZodString>;
+    id: z.ZodString;
     component: z.ZodString;
+    status: z.ZodOptional<z.ZodDefault<z.ZodEnum<{
+        draft: "draft";
+        visible: "visible";
+        hidden: "hidden";
+    }>>>;
     props: z.ZodRecord<z.ZodString, z.ZodUnknown>;
 }, z.core.$strict>;
 export declare const pageDocumentSchema: z.ZodObject<{
@@ -137,6 +149,8 @@ export declare const pageDocumentSchema: z.ZodObject<{
             FAQPage: "FAQPage";
             Article: "Article";
             BlogPosting: "BlogPosting";
+            CreativeWork: "CreativeWork";
+            Person: "Person";
             LocalBusiness: "LocalBusiness";
             Organization: "Organization";
             Product: "Product";
@@ -164,13 +178,19 @@ export declare const pageDocumentSchema: z.ZodObject<{
         headCode: z.ZodOptional<z.ZodString>;
     }, z.core.$strict>;
     sections: z.ZodArray<z.ZodObject<{
-        id: z.ZodOptional<z.ZodString>;
+        id: z.ZodString;
         component: z.ZodString;
+        status: z.ZodOptional<z.ZodDefault<z.ZodEnum<{
+            draft: "draft";
+            visible: "visible";
+            hidden: "hidden";
+        }>>>;
         props: z.ZodRecord<z.ZodString, z.ZodUnknown>;
     }, z.core.$strict>>;
 }, z.core.$strict>;
 export type PageType = z.infer<typeof pageTypeSchema>;
 export type PageStatus = z.infer<typeof pageStatusSchema>;
+export type SectionStatus = z.infer<typeof sectionStatusSchema>;
 export type Seo = z.infer<typeof seoSchema>;
 export type PageSection = z.infer<typeof pageSectionSchema>;
 export type PageDocument = z.infer<typeof pageDocumentSchema>;

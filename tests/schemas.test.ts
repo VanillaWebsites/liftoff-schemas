@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 import {
   componentCatalogSchema,
+  collectionItemSchema,
+  collectionRegistrySchema,
   editableManifestSchema,
   pageDocumentSchema,
   promptEditOutputSchema,
@@ -14,7 +16,9 @@ const validManifest = {
   paths: {
     theme: "src/data/theme.json",
     site: "src/data/site.json",
-    pages: "src/data/pages"
+    pages: "src/data/pages",
+    collections: "src/data/collections.json",
+    collectionItems: "src/data/collections"
   },
   targets: [
     {
@@ -177,6 +181,117 @@ describe("pageDocumentSchema", () => {
       pageType: "service_detail",
       urlPath: "/services/seo/",
       seo: { ...validPage.seo, canonicalPath: "/services/seo/" }
+    });
+
+    expect(result.success).toBe(false);
+  });
+
+  it("rejects duplicate section ids", () => {
+    const result = pageDocumentSchema.safeParse({
+      ...validPage,
+      sections: [
+        validPage.sections[0],
+        {
+          ...validPage.sections[0],
+          props: {
+            heading: "Another section"
+          }
+        }
+      ]
+    });
+
+    expect(result.success).toBe(false);
+  });
+});
+
+describe("collection schemas", () => {
+  it("accepts a valid collection registry and item", () => {
+    const registry = collectionRegistrySchema.parse({
+      version: 1,
+      collections: [
+        {
+          key: "blog",
+          label: "Blog Posts",
+          singularLabel: "Blog Post",
+          enabled: true,
+          routeBase: "/blog/",
+          hasIndex: true,
+          indexPageTarget: "blog",
+          detailTemplate: "generic-detail",
+          itemLabelField: "title",
+          fields: [{ key: "author", label: "Author", type: "string", maxLength: 120 }]
+        }
+      ]
+    });
+
+    const item = collectionItemSchema.parse({
+      version: 1,
+      collection: "blog",
+      slug: "controlled-ai-website-edits",
+      urlPath: "/blog/controlled-ai-website-edits/",
+      status: "published",
+      title: "Controlled AI website edits",
+      excerpt: "Why structured content contracts make AI-assisted updates reviewable.",
+      date: "2026-05-02",
+      featuredImage: "",
+      seo: {
+        title: "Controlled AI website edits",
+        description: "Why structured content contracts make AI-assisted website updates reviewable.",
+        canonicalPath: "/blog/controlled-ai-website-edits/",
+        schemaType: "BlogPosting"
+      },
+      content: [{ id: "body", component: "RichTextSection", props: { content: "Structured content keeps edits reviewable." } }],
+      custom: { author: "Vanilla Websites" }
+    });
+
+    expect(registry.collections[0]?.key).toBe("blog");
+    expect(registry.collections[0]?.rendering).toEqual({ index: "page-section", detail: "generated" });
+    expect(item.collection).toBe("blog");
+  });
+
+  it("accepts explicit collection rendering modes", () => {
+    const registry = collectionRegistrySchema.parse({
+      version: 1,
+      collections: [
+        {
+          key: "testimonials",
+          label: "Testimonials",
+          singularLabel: "Testimonial",
+          enabled: true,
+          routeBase: "/testimonials/",
+          hasIndex: false,
+          rendering: {
+            index: "page-section",
+            detail: "none"
+          },
+          detailTemplate: null,
+          itemLabelField: "title",
+          fields: []
+        }
+      ]
+    });
+
+    expect(registry.collections[0]?.rendering).toEqual({ index: "page-section", detail: "none" });
+  });
+
+  it("rejects invalid collection rendering modes", () => {
+    const result = collectionRegistrySchema.safeParse({
+      version: 1,
+      collections: [
+        {
+          key: "portfolio",
+          label: "Portfolio",
+          singularLabel: "Project",
+          enabled: true,
+          routeBase: "/portfolio/",
+          hasIndex: true,
+          rendering: {
+            index: "route",
+            detail: "generated"
+          },
+          fields: []
+        }
+      ]
     });
 
     expect(result.success).toBe(false);

@@ -67,6 +67,8 @@ export declare const editableManifestSchema: z.ZodObject<{
         theme: z.ZodString;
         site: z.ZodString;
         pages: z.ZodString;
+        collections: z.ZodOptional<z.ZodString>;
+        collectionItems: z.ZodOptional<z.ZodString>;
     }, z.core.$strict>;
     targets: z.ZodArray<z.ZodObject<{
         key: z.ZodString;

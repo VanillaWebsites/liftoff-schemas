@@ -6,8 +6,8 @@ export declare const propDefinitionSchema: z.ZodObject<{
         boolean: "boolean";
         object: "object";
         array: "array";
-        richText: "richText";
         image: "image";
+        richText: "richText";
         link: "link";
     }>;
     required: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
@@ -17,9 +17,9 @@ export declare const propDefinitionSchema: z.ZodObject<{
 export declare const catalogComponentSchema: z.ZodObject<{
     name: z.ZodString;
     category: z.ZodEnum<{
+        section: "section";
         global: "global";
         layout: "layout";
-        section: "section";
     }>;
     version: z.ZodNumber;
     description: z.ZodOptional<z.ZodString>;
@@ -30,8 +30,8 @@ export declare const catalogComponentSchema: z.ZodObject<{
             boolean: "boolean";
             object: "object";
             array: "array";
-            richText: "richText";
             image: "image";
+            richText: "richText";
             link: "link";
         }>;
         required: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
@@ -65,9 +65,9 @@ export declare const componentCatalogSchema: z.ZodObject<{
     components: z.ZodArray<z.ZodObject<{
         name: z.ZodString;
         category: z.ZodEnum<{
+            section: "section";
             global: "global";
             layout: "layout";
-            section: "section";
         }>;
         version: z.ZodNumber;
         description: z.ZodOptional<z.ZodString>;
@@ -78,8 +78,8 @@ export declare const componentCatalogSchema: z.ZodObject<{
                 boolean: "boolean";
                 object: "object";
                 array: "array";
-                richText: "richText";
                 image: "image";
+                richText: "richText";
                 link: "link";
             }>;
             required: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;

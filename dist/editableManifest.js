@@ -51,7 +51,9 @@ export const editableManifestSchema = z
         .object({
         theme: relativePathSchema,
         site: relativePathSchema,
-        pages: relativePathSchema
+        pages: relativePathSchema,
+        collections: relativePathSchema.optional(),
+        collectionItems: relativePathSchema.optional()
     })
         .strict(),
     targets: z.array(editableTargetSchema).min(1),

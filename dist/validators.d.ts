@@ -9,6 +9,8 @@ export declare const schemas: {
             theme: z.ZodString;
             site: z.ZodString;
             pages: z.ZodString;
+            collections: z.ZodOptional<z.ZodString>;
+            collectionItems: z.ZodOptional<z.ZodString>;
         }, z.core.$strict>;
         targets: z.ZodArray<z.ZodObject<{
             key: z.ZodString;
@@ -93,6 +95,8 @@ export declare const schemas: {
                 FAQPage: "FAQPage";
                 Article: "Article";
                 BlogPosting: "BlogPosting";
+                CreativeWork: "CreativeWork";
+                Person: "Person";
                 LocalBusiness: "LocalBusiness";
                 Organization: "Organization";
                 Product: "Product";
@@ -120,8 +124,13 @@ export declare const schemas: {
             headCode: z.ZodOptional<z.ZodString>;
         }, z.core.$strict>;
         sections: z.ZodArray<z.ZodObject<{
-            id: z.ZodOptional<z.ZodString>;
+            id: z.ZodString;
             component: z.ZodString;
+            status: z.ZodOptional<z.ZodDefault<z.ZodEnum<{
+                draft: "draft";
+                visible: "visible";
+                hidden: "hidden";
+            }>>>;
             props: z.ZodRecord<z.ZodString, z.ZodUnknown>;
         }, z.core.$strict>>;
     }, z.core.$strict>;
@@ -130,9 +139,9 @@ export declare const schemas: {
         components: z.ZodArray<z.ZodObject<{
             name: z.ZodString;
             category: z.ZodEnum<{
+                section: "section";
                 global: "global";
                 layout: "layout";
-                section: "section";
             }>;
             version: z.ZodNumber;
             description: z.ZodOptional<z.ZodString>;
@@ -143,8 +152,8 @@ export declare const schemas: {
                     boolean: "boolean";
                     object: "object";
                     array: "array";
-                    richText: "richText";
                     image: "image";
+                    richText: "richText";
                     link: "link";
                 }>;
                 required: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
@@ -250,6 +259,8 @@ export declare const schemas: {
                     FAQPage: "FAQPage";
                     Article: "Article";
                     BlogPosting: "BlogPosting";
+                    CreativeWork: "CreativeWork";
+                    Person: "Person";
                     LocalBusiness: "LocalBusiness";
                     Organization: "Organization";
                     Product: "Product";
@@ -277,8 +288,13 @@ export declare const schemas: {
                 headCode: z.ZodOptional<z.ZodString>;
             }, z.core.$strict>;
             sections: z.ZodArray<z.ZodObject<{
-                id: z.ZodOptional<z.ZodString>;
+                id: z.ZodString;
                 component: z.ZodString;
+                status: z.ZodOptional<z.ZodDefault<z.ZodEnum<{
+                    draft: "draft";
+                    visible: "visible";
+                    hidden: "hidden";
+                }>>>;
                 props: z.ZodRecord<z.ZodString, z.ZodUnknown>;
             }, z.core.$strict>>;
         }, z.core.$strict>>;
@@ -314,6 +330,8 @@ export declare function parseEditableManifest(input: unknown): {
         theme: string;
         site: string;
         pages: string;
+        collections?: string | undefined;
+        collectionItems?: string | undefined;
     };
     targets: {
         key: string;
@@ -351,7 +369,7 @@ export declare function parsePageDocument(input: unknown): {
         twitterTitle?: string | undefined;
         twitterDescription?: string | undefined;
         twitterImage?: string | undefined;
-        schemaType?: "WebPage" | "AboutPage" | "ContactPage" | "Service" | "FAQPage" | "Article" | "BlogPosting" | "LocalBusiness" | "Organization" | "Product" | undefined;
+        schemaType?: "WebPage" | "AboutPage" | "ContactPage" | "Service" | "FAQPage" | "Article" | "BlogPosting" | "CreativeWork" | "Person" | "LocalBusiness" | "Organization" | "Product" | undefined;
         faq?: {
             question: string;
             answer: string;
@@ -375,19 +393,20 @@ export declare function parsePageDocument(input: unknown): {
         headCode?: string | undefined;
     };
     sections: {
+        id: string;
         component: string;
         props: Record<string, unknown>;
-        id?: string | undefined;
+        status?: "draft" | "visible" | "hidden" | undefined;
     }[];
 };
 export declare function parseComponentCatalog(input: unknown): {
     version: 1;
     components: {
         name: string;
-        category: "global" | "layout" | "section";
+        category: "section" | "global" | "layout";
         version: number;
         props: Record<string, {
-            type: "string" | "number" | "boolean" | "object" | "array" | "richText" | "image" | "link";
+            type: "string" | "number" | "boolean" | "object" | "array" | "image" | "richText" | "link";
             required?: boolean | undefined;
             description?: string | undefined;
             maxLength?: number | undefined;
@@ -445,7 +464,7 @@ export declare function parseThemeIngestionOutput(input: unknown): {
             twitterTitle?: string | undefined;
             twitterDescription?: string | undefined;
             twitterImage?: string | undefined;
-            schemaType?: "WebPage" | "AboutPage" | "ContactPage" | "Service" | "FAQPage" | "Article" | "BlogPosting" | "LocalBusiness" | "Organization" | "Product" | undefined;
+            schemaType?: "WebPage" | "AboutPage" | "ContactPage" | "Service" | "FAQPage" | "Article" | "BlogPosting" | "CreativeWork" | "Person" | "LocalBusiness" | "Organization" | "Product" | undefined;
             faq?: {
                 question: string;
                 answer: string;
@@ -469,9 +488,10 @@ export declare function parseThemeIngestionOutput(input: unknown): {
             headCode?: string | undefined;
         };
         sections: {
+            id: string;
             component: string;
             props: Record<string, unknown>;
-            id?: string | undefined;
+            status?: "draft" | "visible" | "hidden" | undefined;
         }[];
     }[];
     theme: {

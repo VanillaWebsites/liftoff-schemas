@@ -21,6 +21,7 @@ export const pageTypeSchema = z.enum([
     "legal"
 ]);
 export const pageStatusSchema = z.enum(["draft", "published", "archived"]);
+export const sectionStatusSchema = z.enum(["visible", "hidden", "draft"]);
 export const pageUrlPathSchema = urlPathSchema
     .regex(/^\/$|^\/(?:[a-z0-9]+(?:-[a-z0-9]+)*\/)+$/, {
     message: "URL paths must be / or lowercase slug segments with trailing slash"
@@ -45,7 +46,20 @@ export const seoSchema = z
     twitterTitle: z.string().max(70).optional(),
     twitterDescription: z.string().max(200).optional(),
     twitterImage: z.string().max(240).optional(),
-    schemaType: z.enum(["WebPage", "AboutPage", "ContactPage", "Service", "FAQPage", "Article", "BlogPosting", "LocalBusiness", "Organization", "Product"]).optional(),
+    schemaType: z.enum([
+        "WebPage",
+        "AboutPage",
+        "ContactPage",
+        "Service",
+        "FAQPage",
+        "Article",
+        "BlogPosting",
+        "CreativeWork",
+        "Person",
+        "LocalBusiness",
+        "Organization",
+        "Product"
+    ]).optional(),
     faq: z.array(z.object({
         question: z.string().max(160),
         answer: z.string().max(800)
@@ -71,8 +85,9 @@ export const seoSchema = z
     .strict();
 export const pageSectionSchema = z
     .object({
-    id: identifierSchema.optional(),
+    id: identifierSchema,
     component: componentNameSchema,
+    status: sectionStatusSchema.default("visible").optional(),
     props: z.record(z.string().min(1), z.unknown())
 })
     .strict();
@@ -88,6 +103,17 @@ export const pageDocumentSchema = z
 })
     .strict()
     .superRefine((page, context) => {
+    const sectionIds = new Set();
+    for (const [index, section] of page.sections.entries()) {
+        if (sectionIds.has(section.id)) {
+            context.addIssue({
+                code: "custom",
+                message: `Duplicate section id: ${section.id}`,
+                path: ["sections", index, "id"]
+            });
+        }
+        sectionIds.add(section.id);
+    }
     if (page.urlPath !== "/") {
         const segments = page.urlPath.split("/").filter(Boolean);
         const lastSegment = segments.at(-1);

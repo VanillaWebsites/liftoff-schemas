@@ -79,6 +79,8 @@ export declare const themeIngestionOutputSchema: z.ZodObject<{
                 FAQPage: "FAQPage";
                 Article: "Article";
                 BlogPosting: "BlogPosting";
+                CreativeWork: "CreativeWork";
+                Person: "Person";
                 LocalBusiness: "LocalBusiness";
                 Organization: "Organization";
                 Product: "Product";
@@ -106,8 +108,13 @@ export declare const themeIngestionOutputSchema: z.ZodObject<{
             headCode: z.ZodOptional<z.ZodString>;
         }, z.core.$strict>;
         sections: z.ZodArray<z.ZodObject<{
-            id: z.ZodOptional<z.ZodString>;
+            id: z.ZodString;
             component: z.ZodString;
+            status: z.ZodOptional<z.ZodDefault<z.ZodEnum<{
+                draft: "draft";
+                visible: "visible";
+                hidden: "hidden";
+            }>>>;
             props: z.ZodRecord<z.ZodString, z.ZodUnknown>;
         }, z.core.$strict>>;
     }, z.core.$strict>>;
