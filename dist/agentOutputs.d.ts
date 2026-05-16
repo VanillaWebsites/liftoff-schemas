@@ -5,10 +5,13 @@ export declare const promptChangeSchema: z.ZodObject<{
     reason: z.ZodOptional<z.ZodString>;
 }, z.core.$strict>;
 export declare const promptEditOutputSchema: z.ZodObject<{
-    changes: z.ZodArray<z.ZodObject<{
+    changes: z.ZodOptional<z.ZodDefault<z.ZodArray<z.ZodObject<{
         field: z.ZodString;
         value: z.ZodUnion<readonly [z.ZodString, z.ZodNumber, z.ZodBoolean, z.ZodNull]>;
         reason: z.ZodOptional<z.ZodString>;
+    }, z.core.$strict>>>>;
+    sectionOrder: z.ZodOptional<z.ZodObject<{
+        sectionIds: z.ZodArray<z.ZodString>;
     }, z.core.$strict>>;
 }, z.core.$strict>;
 export declare const generatedFileSchema: z.ZodObject<{

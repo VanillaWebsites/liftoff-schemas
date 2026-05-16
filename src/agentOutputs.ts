@@ -13,9 +13,23 @@ export const promptChangeSchema = z
 
 export const promptEditOutputSchema = z
   .object({
-    changes: z.array(promptChangeSchema).min(1).max(100)
+    changes: z.array(promptChangeSchema).max(100).default([]).optional(),
+    sectionOrder: z
+      .object({
+        sectionIds: z.array(z.string().min(1).max(80).regex(/^[A-Za-z][A-Za-z0-9_-]*$/)).min(1).max(40)
+      })
+      .strict()
+      .optional()
   })
-  .strict();
+  .strict()
+  .superRefine((output, context) => {
+    if ((!output.changes || output.changes.length === 0) && !output.sectionOrder) {
+      context.addIssue({
+        code: "custom",
+        message: "At least one content change or section order change is required"
+      });
+    }
+  });
 
 export const generatedFileSchema = z
   .object({

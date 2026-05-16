@@ -337,7 +337,16 @@ describe("agent output schemas", () => {
     expect(result.changes).toHaveLength(1);
   });
 
-  it("rejects empty prompt edit changes", () => {
+  it("accepts prompt edit section order changes without field changes", () => {
+    const result = promptEditOutputSchema.parse({
+      changes: [],
+      sectionOrder: { sectionIds: ["hero", "proof"] }
+    });
+
+    expect(result.sectionOrder?.sectionIds).toEqual(["hero", "proof"]);
+  });
+
+  it("rejects prompt edits without field or section order changes", () => {
     expect(promptEditOutputSchema.safeParse({ changes: [] }).success).toBe(false);
   });
 

@@ -196,10 +196,13 @@ export declare const schemas: {
         shadows: z.ZodOptional<z.ZodDefault<z.ZodRecord<z.ZodString, z.ZodString>>>;
     }, z.core.$strict>;
     readonly promptEditOutput: z.ZodObject<{
-        changes: z.ZodArray<z.ZodObject<{
+        changes: z.ZodOptional<z.ZodDefault<z.ZodArray<z.ZodObject<{
             field: z.ZodString;
             value: z.ZodUnion<readonly [z.ZodString, z.ZodNumber, z.ZodBoolean, z.ZodNull]>;
             reason: z.ZodOptional<z.ZodString>;
+        }, z.core.$strict>>>>;
+        sectionOrder: z.ZodOptional<z.ZodObject<{
+            sectionIds: z.ZodArray<z.ZodString>;
         }, z.core.$strict>>;
     }, z.core.$strict>;
     readonly themeIngestionOutput: z.ZodObject<{
@@ -437,11 +440,14 @@ export declare function parseThemeTokens(input: unknown): {
     shadows?: Record<string, string> | undefined;
 };
 export declare function parsePromptEditOutput(input: unknown): {
-    changes: {
+    changes?: {
         field: string;
         value: string | number | boolean | null;
         reason?: string | undefined;
-    }[];
+    }[] | undefined;
+    sectionOrder?: {
+        sectionIds: string[];
+    } | undefined;
 };
 export declare function parseThemeIngestionOutput(input: unknown): {
     summary: string;
