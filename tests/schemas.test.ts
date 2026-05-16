@@ -355,7 +355,34 @@ describe("agent output schemas", () => {
     expect(result.sectionAdds?.[0]?.sectionId).toBe("notes");
   });
 
-  it("rejects prompt edits without field or section order changes", () => {
+  it("accepts prompt edit section prop changes without field changes", () => {
+    const result = promptEditOutputSchema.parse({
+      changes: [],
+      sectionProps: [{ sectionId: "hero", props: { primaryCta: { label: "Start", href: "/contact/" } } }]
+    });
+
+    expect(result.sectionProps?.[0]?.props).toMatchObject({ primaryCta: { label: "Start", href: "/contact/" } });
+  });
+
+  it("accepts prompt edit section status changes without field changes", () => {
+    const result = promptEditOutputSchema.parse({
+      changes: [],
+      sectionStatusChanges: [{ sectionId: "hero", status: "hidden" }]
+    });
+
+    expect(result.sectionStatusChanges?.[0]).toMatchObject({ sectionId: "hero", status: "hidden" });
+  });
+
+  it("accepts prompt edit section remove changes without field changes", () => {
+    const result = promptEditOutputSchema.parse({
+      changes: [],
+      sectionRemoves: [{ sectionId: "proof" }]
+    });
+
+    expect(result.sectionRemoves?.[0]?.sectionId).toBe("proof");
+  });
+
+  it("rejects prompt edits without field or section changes", () => {
     expect(promptEditOutputSchema.safeParse({ changes: [] }).success).toBe(false);
   });
 

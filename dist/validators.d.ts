@@ -204,8 +204,28 @@ export declare const schemas: {
         sectionAdds: z.ZodOptional<z.ZodDefault<z.ZodArray<z.ZodObject<{
             sectionId: z.ZodString;
             component: z.ZodString;
+            status: z.ZodOptional<z.ZodEnum<{
+                draft: "draft";
+                visible: "visible";
+                hidden: "hidden";
+            }>>;
             insertIndex: z.ZodOptional<z.ZodNumber>;
             props: z.ZodDefault<z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>>;
+        }, z.core.$strict>>>>;
+        sectionProps: z.ZodOptional<z.ZodDefault<z.ZodArray<z.ZodObject<{
+            sectionId: z.ZodString;
+            props: z.ZodRecord<z.ZodString, z.ZodUnknown>;
+        }, z.core.$strict>>>>;
+        sectionStatusChanges: z.ZodOptional<z.ZodDefault<z.ZodArray<z.ZodObject<{
+            sectionId: z.ZodString;
+            status: z.ZodEnum<{
+                draft: "draft";
+                visible: "visible";
+                hidden: "hidden";
+            }>;
+        }, z.core.$strict>>>>;
+        sectionRemoves: z.ZodOptional<z.ZodDefault<z.ZodArray<z.ZodObject<{
+            sectionId: z.ZodString;
         }, z.core.$strict>>>>;
         sectionOrder: z.ZodOptional<z.ZodObject<{
             sectionIds: z.ZodArray<z.ZodString>;
@@ -455,7 +475,19 @@ export declare function parsePromptEditOutput(input: unknown): {
         sectionId: string;
         component: string;
         props: Record<string, unknown>;
+        status?: "draft" | "visible" | "hidden" | undefined;
         insertIndex?: number | undefined;
+    }[] | undefined;
+    sectionProps?: {
+        sectionId: string;
+        props: Record<string, unknown>;
+    }[] | undefined;
+    sectionStatusChanges?: {
+        sectionId: string;
+        status: "draft" | "visible" | "hidden";
+    }[] | undefined;
+    sectionRemoves?: {
+        sectionId: string;
     }[] | undefined;
     sectionOrder?: {
         sectionIds: string[];

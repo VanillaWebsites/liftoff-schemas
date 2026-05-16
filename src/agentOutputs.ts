@@ -20,12 +20,48 @@ export const promptEditOutputSchema = z
           .object({
             sectionId: z.string().min(1).max(80).regex(/^[A-Za-z][A-Za-z0-9_-]*$/),
             component: z.string().min(1).max(80).regex(/^[A-Z][A-Za-z0-9]*$/),
+            status: z.enum(["visible", "hidden", "draft"]).optional(),
             insertIndex: z.number().int().min(0).max(40).optional(),
             props: z.record(z.string().min(1).max(80), z.unknown()).optional().default({})
           })
           .strict()
       )
       .max(20)
+      .default([])
+      .optional(),
+    sectionProps: z
+      .array(
+        z
+          .object({
+            sectionId: z.string().min(1).max(80).regex(/^[A-Za-z][A-Za-z0-9_-]*$/),
+            props: z.record(z.string().min(1).max(80), z.unknown())
+          })
+          .strict()
+      )
+      .max(40)
+      .default([])
+      .optional(),
+    sectionStatusChanges: z
+      .array(
+        z
+          .object({
+            sectionId: z.string().min(1).max(80).regex(/^[A-Za-z][A-Za-z0-9_-]*$/),
+            status: z.enum(["visible", "hidden", "draft"])
+          })
+          .strict()
+      )
+      .max(40)
+      .default([])
+      .optional(),
+    sectionRemoves: z
+      .array(
+        z
+          .object({
+            sectionId: z.string().min(1).max(80).regex(/^[A-Za-z][A-Za-z0-9_-]*$/)
+          })
+          .strict()
+      )
+      .max(40)
       .default([])
       .optional(),
     sectionOrder: z
@@ -37,10 +73,17 @@ export const promptEditOutputSchema = z
   })
   .strict()
   .superRefine((output, context) => {
-    if ((!output.changes || output.changes.length === 0) && (!output.sectionAdds || output.sectionAdds.length === 0) && !output.sectionOrder) {
+    if (
+      (!output.changes || output.changes.length === 0) &&
+      (!output.sectionAdds || output.sectionAdds.length === 0) &&
+      (!output.sectionProps || output.sectionProps.length === 0) &&
+      (!output.sectionStatusChanges || output.sectionStatusChanges.length === 0) &&
+      (!output.sectionRemoves || output.sectionRemoves.length === 0) &&
+      !output.sectionOrder
+    ) {
       context.addIssue({
         code: "custom",
-        message: "At least one content change, section add, or section order change is required"
+        message: "At least one content change or section change is required"
       });
     }
   });
