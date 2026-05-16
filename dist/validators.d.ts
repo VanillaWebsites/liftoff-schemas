@@ -159,6 +159,68 @@ export declare const schemas: {
                 required: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
                 description: z.ZodOptional<z.ZodString>;
                 maxLength: z.ZodOptional<z.ZodNumber>;
+                minItems: z.ZodOptional<z.ZodNumber>;
+                maxItems: z.ZodOptional<z.ZodNumber>;
+                fields: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodObject<{
+                    type: z.ZodEnum<{
+                        string: "string";
+                        number: "number";
+                        boolean: "boolean";
+                        phone: "phone";
+                        email: "email";
+                        url: "url";
+                        text: "text";
+                        markdown: "markdown";
+                        richText: "richText";
+                        asset: "asset";
+                    }>;
+                    label: z.ZodOptional<z.ZodString>;
+                    maxLength: z.ZodOptional<z.ZodNumber>;
+                    minLength: z.ZodOptional<z.ZodNumber>;
+                    allowHtml: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+                    required: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+                    pattern: z.ZodOptional<z.ZodString>;
+                    allowedValues: z.ZodOptional<z.ZodArray<z.ZodString>>;
+                }, z.core.$strict>>>;
+                item: z.ZodOptional<z.ZodObject<{
+                    type: z.ZodEnum<{
+                        string: "string";
+                        object: "object";
+                        text: "text";
+                        richText: "richText";
+                        link: "link";
+                    }>;
+                    fields: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodObject<{
+                        type: z.ZodEnum<{
+                            string: "string";
+                            number: "number";
+                            boolean: "boolean";
+                            phone: "phone";
+                            email: "email";
+                            url: "url";
+                            text: "text";
+                            markdown: "markdown";
+                            richText: "richText";
+                            asset: "asset";
+                        }>;
+                        label: z.ZodOptional<z.ZodString>;
+                        maxLength: z.ZodOptional<z.ZodNumber>;
+                        minLength: z.ZodOptional<z.ZodNumber>;
+                        allowHtml: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+                        required: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+                        pattern: z.ZodOptional<z.ZodString>;
+                        allowedValues: z.ZodOptional<z.ZodArray<z.ZodString>>;
+                    }, z.core.$strict>>>;
+                }, z.core.$strict>>;
+                ui: z.ZodOptional<z.ZodObject<{
+                    widget: z.ZodOptional<z.ZodEnum<{
+                        cards: "cards";
+                        list: "list";
+                        paragraphs: "paragraphs";
+                        link: "link";
+                    }>>;
+                    itemLabelField: z.ZodOptional<z.ZodString>;
+                }, z.core.$strict>>;
             }, z.core.$strict>>;
             editableProps: z.ZodOptional<z.ZodDefault<z.ZodRecord<z.ZodString, z.ZodObject<{
                 type: z.ZodEnum<{
@@ -439,6 +501,35 @@ export declare function parseComponentCatalog(input: unknown): {
             required?: boolean | undefined;
             description?: string | undefined;
             maxLength?: number | undefined;
+            minItems?: number | undefined;
+            maxItems?: number | undefined;
+            fields?: Record<string, {
+                type: "string" | "number" | "boolean" | "phone" | "email" | "url" | "text" | "markdown" | "richText" | "asset";
+                label?: string | undefined;
+                maxLength?: number | undefined;
+                minLength?: number | undefined;
+                allowHtml?: boolean | undefined;
+                required?: boolean | undefined;
+                pattern?: string | undefined;
+                allowedValues?: string[] | undefined;
+            }> | undefined;
+            item?: {
+                type: "string" | "object" | "text" | "richText" | "link";
+                fields?: Record<string, {
+                    type: "string" | "number" | "boolean" | "phone" | "email" | "url" | "text" | "markdown" | "richText" | "asset";
+                    label?: string | undefined;
+                    maxLength?: number | undefined;
+                    minLength?: number | undefined;
+                    allowHtml?: boolean | undefined;
+                    required?: boolean | undefined;
+                    pattern?: string | undefined;
+                    allowedValues?: string[] | undefined;
+                }> | undefined;
+            } | undefined;
+            ui?: {
+                widget?: "cards" | "list" | "paragraphs" | "link" | undefined;
+                itemLabelField?: string | undefined;
+            } | undefined;
         }>;
         description?: string | undefined;
         editableProps?: Record<string, {

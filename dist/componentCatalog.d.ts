@@ -13,6 +13,68 @@ export declare const propDefinitionSchema: z.ZodObject<{
     required: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
     description: z.ZodOptional<z.ZodString>;
     maxLength: z.ZodOptional<z.ZodNumber>;
+    minItems: z.ZodOptional<z.ZodNumber>;
+    maxItems: z.ZodOptional<z.ZodNumber>;
+    fields: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodObject<{
+        type: z.ZodEnum<{
+            string: "string";
+            number: "number";
+            boolean: "boolean";
+            phone: "phone";
+            email: "email";
+            url: "url";
+            text: "text";
+            markdown: "markdown";
+            richText: "richText";
+            asset: "asset";
+        }>;
+        label: z.ZodOptional<z.ZodString>;
+        maxLength: z.ZodOptional<z.ZodNumber>;
+        minLength: z.ZodOptional<z.ZodNumber>;
+        allowHtml: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+        required: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+        pattern: z.ZodOptional<z.ZodString>;
+        allowedValues: z.ZodOptional<z.ZodArray<z.ZodString>>;
+    }, z.core.$strict>>>;
+    item: z.ZodOptional<z.ZodObject<{
+        type: z.ZodEnum<{
+            string: "string";
+            object: "object";
+            text: "text";
+            richText: "richText";
+            link: "link";
+        }>;
+        fields: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodObject<{
+            type: z.ZodEnum<{
+                string: "string";
+                number: "number";
+                boolean: "boolean";
+                phone: "phone";
+                email: "email";
+                url: "url";
+                text: "text";
+                markdown: "markdown";
+                richText: "richText";
+                asset: "asset";
+            }>;
+            label: z.ZodOptional<z.ZodString>;
+            maxLength: z.ZodOptional<z.ZodNumber>;
+            minLength: z.ZodOptional<z.ZodNumber>;
+            allowHtml: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+            required: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+            pattern: z.ZodOptional<z.ZodString>;
+            allowedValues: z.ZodOptional<z.ZodArray<z.ZodString>>;
+        }, z.core.$strict>>>;
+    }, z.core.$strict>>;
+    ui: z.ZodOptional<z.ZodObject<{
+        widget: z.ZodOptional<z.ZodEnum<{
+            cards: "cards";
+            list: "list";
+            paragraphs: "paragraphs";
+            link: "link";
+        }>>;
+        itemLabelField: z.ZodOptional<z.ZodString>;
+    }, z.core.$strict>>;
 }, z.core.$strict>;
 export declare const catalogComponentSchema: z.ZodObject<{
     name: z.ZodString;
@@ -37,6 +99,68 @@ export declare const catalogComponentSchema: z.ZodObject<{
         required: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
         description: z.ZodOptional<z.ZodString>;
         maxLength: z.ZodOptional<z.ZodNumber>;
+        minItems: z.ZodOptional<z.ZodNumber>;
+        maxItems: z.ZodOptional<z.ZodNumber>;
+        fields: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodObject<{
+            type: z.ZodEnum<{
+                string: "string";
+                number: "number";
+                boolean: "boolean";
+                phone: "phone";
+                email: "email";
+                url: "url";
+                text: "text";
+                markdown: "markdown";
+                richText: "richText";
+                asset: "asset";
+            }>;
+            label: z.ZodOptional<z.ZodString>;
+            maxLength: z.ZodOptional<z.ZodNumber>;
+            minLength: z.ZodOptional<z.ZodNumber>;
+            allowHtml: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+            required: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+            pattern: z.ZodOptional<z.ZodString>;
+            allowedValues: z.ZodOptional<z.ZodArray<z.ZodString>>;
+        }, z.core.$strict>>>;
+        item: z.ZodOptional<z.ZodObject<{
+            type: z.ZodEnum<{
+                string: "string";
+                object: "object";
+                text: "text";
+                richText: "richText";
+                link: "link";
+            }>;
+            fields: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodObject<{
+                type: z.ZodEnum<{
+                    string: "string";
+                    number: "number";
+                    boolean: "boolean";
+                    phone: "phone";
+                    email: "email";
+                    url: "url";
+                    text: "text";
+                    markdown: "markdown";
+                    richText: "richText";
+                    asset: "asset";
+                }>;
+                label: z.ZodOptional<z.ZodString>;
+                maxLength: z.ZodOptional<z.ZodNumber>;
+                minLength: z.ZodOptional<z.ZodNumber>;
+                allowHtml: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+                required: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+                pattern: z.ZodOptional<z.ZodString>;
+                allowedValues: z.ZodOptional<z.ZodArray<z.ZodString>>;
+            }, z.core.$strict>>>;
+        }, z.core.$strict>>;
+        ui: z.ZodOptional<z.ZodObject<{
+            widget: z.ZodOptional<z.ZodEnum<{
+                cards: "cards";
+                list: "list";
+                paragraphs: "paragraphs";
+                link: "link";
+            }>>;
+            itemLabelField: z.ZodOptional<z.ZodString>;
+        }, z.core.$strict>>;
     }, z.core.$strict>>;
     editableProps: z.ZodOptional<z.ZodDefault<z.ZodRecord<z.ZodString, z.ZodObject<{
         type: z.ZodEnum<{
@@ -85,6 +209,68 @@ export declare const componentCatalogSchema: z.ZodObject<{
             required: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
             description: z.ZodOptional<z.ZodString>;
             maxLength: z.ZodOptional<z.ZodNumber>;
+            minItems: z.ZodOptional<z.ZodNumber>;
+            maxItems: z.ZodOptional<z.ZodNumber>;
+            fields: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodObject<{
+                type: z.ZodEnum<{
+                    string: "string";
+                    number: "number";
+                    boolean: "boolean";
+                    phone: "phone";
+                    email: "email";
+                    url: "url";
+                    text: "text";
+                    markdown: "markdown";
+                    richText: "richText";
+                    asset: "asset";
+                }>;
+                label: z.ZodOptional<z.ZodString>;
+                maxLength: z.ZodOptional<z.ZodNumber>;
+                minLength: z.ZodOptional<z.ZodNumber>;
+                allowHtml: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+                required: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+                pattern: z.ZodOptional<z.ZodString>;
+                allowedValues: z.ZodOptional<z.ZodArray<z.ZodString>>;
+            }, z.core.$strict>>>;
+            item: z.ZodOptional<z.ZodObject<{
+                type: z.ZodEnum<{
+                    string: "string";
+                    object: "object";
+                    text: "text";
+                    richText: "richText";
+                    link: "link";
+                }>;
+                fields: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodObject<{
+                    type: z.ZodEnum<{
+                        string: "string";
+                        number: "number";
+                        boolean: "boolean";
+                        phone: "phone";
+                        email: "email";
+                        url: "url";
+                        text: "text";
+                        markdown: "markdown";
+                        richText: "richText";
+                        asset: "asset";
+                    }>;
+                    label: z.ZodOptional<z.ZodString>;
+                    maxLength: z.ZodOptional<z.ZodNumber>;
+                    minLength: z.ZodOptional<z.ZodNumber>;
+                    allowHtml: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+                    required: z.ZodOptional<z.ZodDefault<z.ZodBoolean>>;
+                    pattern: z.ZodOptional<z.ZodString>;
+                    allowedValues: z.ZodOptional<z.ZodArray<z.ZodString>>;
+                }, z.core.$strict>>>;
+            }, z.core.$strict>>;
+            ui: z.ZodOptional<z.ZodObject<{
+                widget: z.ZodOptional<z.ZodEnum<{
+                    cards: "cards";
+                    list: "list";
+                    paragraphs: "paragraphs";
+                    link: "link";
+                }>>;
+                itemLabelField: z.ZodOptional<z.ZodString>;
+            }, z.core.$strict>>;
         }, z.core.$strict>>;
         editableProps: z.ZodOptional<z.ZodDefault<z.ZodRecord<z.ZodString, z.ZodObject<{
             type: z.ZodEnum<{
