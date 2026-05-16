@@ -346,6 +346,15 @@ describe("agent output schemas", () => {
     expect(result.sectionOrder?.sectionIds).toEqual(["hero", "proof"]);
   });
 
+  it("accepts prompt edit section add changes without field changes", () => {
+    const result = promptEditOutputSchema.parse({
+      changes: [],
+      sectionAdds: [{ sectionId: "notes", component: "RichTextSection", props: { body: ["Draft notes"] } }]
+    });
+
+    expect(result.sectionAdds?.[0]?.sectionId).toBe("notes");
+  });
+
   it("rejects prompt edits without field or section order changes", () => {
     expect(promptEditOutputSchema.safeParse({ changes: [] }).success).toBe(false);
   });

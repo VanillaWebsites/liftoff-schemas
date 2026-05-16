@@ -10,6 +10,12 @@ export declare const promptEditOutputSchema: z.ZodObject<{
         value: z.ZodUnion<readonly [z.ZodString, z.ZodNumber, z.ZodBoolean, z.ZodNull]>;
         reason: z.ZodOptional<z.ZodString>;
     }, z.core.$strict>>>>;
+    sectionAdds: z.ZodOptional<z.ZodDefault<z.ZodArray<z.ZodObject<{
+        sectionId: z.ZodString;
+        component: z.ZodString;
+        insertIndex: z.ZodOptional<z.ZodNumber>;
+        props: z.ZodDefault<z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>>;
+    }, z.core.$strict>>>>;
     sectionOrder: z.ZodOptional<z.ZodObject<{
         sectionIds: z.ZodArray<z.ZodString>;
     }, z.core.$strict>>;

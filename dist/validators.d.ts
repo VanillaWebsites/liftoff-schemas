@@ -201,6 +201,12 @@ export declare const schemas: {
             value: z.ZodUnion<readonly [z.ZodString, z.ZodNumber, z.ZodBoolean, z.ZodNull]>;
             reason: z.ZodOptional<z.ZodString>;
         }, z.core.$strict>>>>;
+        sectionAdds: z.ZodOptional<z.ZodDefault<z.ZodArray<z.ZodObject<{
+            sectionId: z.ZodString;
+            component: z.ZodString;
+            insertIndex: z.ZodOptional<z.ZodNumber>;
+            props: z.ZodDefault<z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>>;
+        }, z.core.$strict>>>>;
         sectionOrder: z.ZodOptional<z.ZodObject<{
             sectionIds: z.ZodArray<z.ZodString>;
         }, z.core.$strict>>;
@@ -444,6 +450,12 @@ export declare function parsePromptEditOutput(input: unknown): {
         field: string;
         value: string | number | boolean | null;
         reason?: string | undefined;
+    }[] | undefined;
+    sectionAdds?: {
+        sectionId: string;
+        component: string;
+        props: Record<string, unknown>;
+        insertIndex?: number | undefined;
     }[] | undefined;
     sectionOrder?: {
         sectionIds: string[];
