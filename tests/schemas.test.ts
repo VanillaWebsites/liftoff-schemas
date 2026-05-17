@@ -3,7 +3,10 @@ import {
   componentCatalogSchema,
   collectionItemSchema,
   collectionRegistrySchema,
+  draftRecordSchema,
   editableManifestSchema,
+  pageVersionRecordSchema,
+  previewTokenRecordSchema,
   pageDocumentSchema,
   promptEditOutputSchema,
   themeIngestionOutputSchema,
@@ -201,6 +204,47 @@ describe("pageDocumentSchema", () => {
     });
 
     expect(result.success).toBe(false);
+  });
+});
+
+describe("content store schemas", () => {
+  it("accepts page version, draft, and preview token records", () => {
+    const pageVersion = pageVersionRecordSchema.parse({
+      id: "page_home_v1",
+      pageId: "page_home",
+      versionNumber: 1,
+      content: validPage,
+      seo: validPage.seo,
+      route: { path: "/" },
+      validationStatus: "valid",
+      validationResult: {},
+      createdAt: "2026-05-17T08:00:00.000Z"
+    });
+
+    const draft = draftRecordSchema.parse({
+      id: "draft_home",
+      siteId: "site_demo",
+      pageId: "page_home",
+      basePageVersionId: pageVersion.id,
+      currentDraftContent: validPage,
+      status: "open",
+      createdAt: "2026-05-17T08:00:00.000Z",
+      updatedAt: "2026-05-17T08:00:00.000Z"
+    });
+
+    const token = previewTokenRecordSchema.parse({
+      id: "preview_token_home",
+      tokenHash: "a".repeat(64),
+      siteId: "site_demo",
+      draftId: draft.id,
+      allowedPathPrefix: "/",
+      expiresAt: "2026-05-31T08:00:00.000Z",
+      createdAt: "2026-05-17T08:00:00.000Z"
+    });
+
+    expect(pageVersion.content.slug).toBe("home");
+    expect(draft.status).toBe("open");
+    expect(token.tokenHash).toHaveLength(64);
   });
 });
 

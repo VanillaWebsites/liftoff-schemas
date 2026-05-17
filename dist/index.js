@@ -1,6 +1,7 @@
 export * from "./agentOutputs.js";
 export * from "./common.js";
 export * from "./componentCatalog.js";
+export * from "./contentStore.js";
 export * from "./collections.js";
 export * from "./editableManifest.js";
 export * from "./pageDocument.js";
